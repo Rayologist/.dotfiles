@@ -1,0 +1,96 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+final_space: true
+version: 3
+blocks:
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: path
+        style: plain
+        foreground: blue
+        background: transparent
+        template: "{{ .Path }} "
+        properties:
+          style: full
+
+      - type: git
+        style: plain
+        foreground: yellow
+        background: transparent
+        template: >-
+          {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}
+          <cyan>{{ if and (gt .Behind 0) (gt .Ahead 0) }}󰹹 {{ else if gt .Behind 0 }} {{ else if gt .Ahead 0 }} {{ end }}</>
+          
+        properties:
+          branch_icon: ''
+          commit_icon: '@'
+          fetch_status: true
+
+
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: text
+        foreground: magenta
+        background: transparent
+        style: plain
+        # template: "" # \uef444
+        template: "❯"
+
+  - type: rprompt
+    segments:
+      - type: node
+        style: plain
+        # foreground: "#6CA35E"
+        foreground: green
+        template: "{{ if .PackageManagerIcon }}<darkGray>{{ .PackageManagerIcon }}</> {{ end }}  {{ .Full }} "
+        properties:
+          fetch_package_manager: true
+
+      - type: go
+        style: plain
+        # foreground: "#7FD5EA"
+        foreground: cyan
+        template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+        
+      - type: lua
+        style: plain
+        foreground: blue
+        template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Major }}.{{ .Minor }}{{ end }} "
+        properties:
+          preferred_executable: luajit
+
+      - type: python
+        style: plain
+        foreground: "#906cff"
+        template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }} {{ .Full }} {{ end }} "
+
+      - type: react
+        style: plain
+        foreground: cyan
+        template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+
+      # - type: docker
+      #   foreground: "#0B59E7"
+      #   template: "  {{ .Context }} "
+
+secondary_prompt:
+  foreground: magenta
+  background: transparent
+  template: '❯❯ '
+
+tooltips:
+  - type: kubectl
+    style: plain
+    tips:
+      - kubectl
+    foreground: "#326CE5"
+    template: " 󱃾 {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} "
+    properties:
+      context_aliases:
+        __firstory_prod_arn__: firstory-production
+        __firstory_staging_arn__: firstory-staging
+
