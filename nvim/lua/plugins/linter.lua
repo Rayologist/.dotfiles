@@ -8,11 +8,18 @@ return {
       javascriptreact = { "eslint_d" },
       typescriptreact = { "eslint_d" },
       python = { "ruff" },
+      dockerfile = { "hadolint" },
       go = { "golangci-lint" },
       ["*"] = { "cspell" },
     },
     ---@type table<string,table>
     linters = {},
+    default_severity = {
+      ["error"] = vim.diagnostic.severity.WARN,
+      ["warning"] = vim.diagnostic.severity.WARN,
+      ["information"] = vim.diagnostic.severity.INFO,
+      ["hint"] = vim.diagnostic.severity.HINT,
+    },
   },
   config = function(_, opts)
     local M = {}

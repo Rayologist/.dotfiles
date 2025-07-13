@@ -24,8 +24,9 @@ return {
       lsp_format = "fallback",
       async = false,
       quiet = false,
-      timeout_ms = 1000,
+      timeout_ms = 3000,
     },
+    ---@type table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride>
     formatters = {
       injected = { options = { ignore_errors = true } },
     },
@@ -38,7 +39,7 @@ return {
           lsp_format = "fallback",
           async = false,
           quiet = false,
-          timeout_ms = 1000,
+          timeout_ms = 3000,
         })
       end,
       desc = "Format",

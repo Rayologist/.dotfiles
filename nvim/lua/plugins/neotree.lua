@@ -95,6 +95,20 @@ return {
       end,
       desc = "NeoTree reveal toggle",
     },
+    {
+      "<leader>ge",
+      function()
+        require("neo-tree.command").execute({ source = "git_status", toggle = true })
+      end,
+      desc = "Git Explorer",
+    },
+    {
+      "<leader>be",
+      function()
+        require("neo-tree.command").execute({ source = "buffers", toggle = true })
+      end,
+      desc = "Buffer Explorer",
+    },
   },
   config = function(_, opts)
     require("neo-tree").setup(opts)

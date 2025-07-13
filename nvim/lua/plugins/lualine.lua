@@ -78,6 +78,7 @@ return {
     return {
       options = {
         theme = theme,
+        globalstatus = true,
         component_separators = "",
         section_separators = { left = "", right = "" },
         disabled_filetypes = {

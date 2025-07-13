@@ -112,7 +112,15 @@ return {
     {
       "<leader>fs",
       function()
-        builtin.grep_string({ search = vim.fn.input("Grep > ") })
+        local ok, query = pcall(vim.fn.input, "Grep > ")
+        if not ok or query == "" then
+          return
+        end
+
+        builtin.grep_string({
+          search = query,
+          word_match = "-w",
+        })
       end,
       desc = "Grep",
     },

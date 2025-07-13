@@ -4,30 +4,10 @@ return {
     dependencies = {
       {
         "mason-org/mason.nvim",
-        branch = "v1.x",
-        opts = {
-          ui = {
-            border = "rounded",
-          },
-        },
+        opts = {},
       },
       {
         "mason-org/mason-lspconfig.nvim",
-        branch = "v1.x",
-        opts = {
-          ensure_installed = {
-            -- lsp
-            "yamlls",
-            "lua_ls",
-            "pyright",
-            "ts_ls",
-            "gopls",
-            "html",
-            "cssls",
-            "graphql",
-          },
-          automatic_installation = true,
-        },
       },
       {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -42,6 +22,7 @@ return {
             "ruff",
             "golangci-lint",
             "cspell",
+            "hadolint", -- dockerfile linter
           },
         },
       },
@@ -100,41 +81,49 @@ return {
         end,
       })
 
-      -- local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "󰋽" }
-      local signs = { Error = "", Warn = "", Hint = "", Info = "" }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        -- vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-      end
-
       -- Add border to the diagnostic popup window
       vim.diagnostic.config({
-        update_in_insert = true,
-        -- virtual_text = {
-        --   prefix = ' ', -- Could be '●', '▎', 'x', '■', , 
-        --   current_line = true,
-        -- },
-        virtual_text = false,
         float = { border = "rounded" },
+        severity_sort = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.HINT] = "",
+            [vim.diagnostic.severity.INFO] = "",
+          },
+        },
       })
 
       -- Add the border on hover and on signature help popup window
-      local handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-      }
 
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
-      local capabilities = cmp_nvim_lsp.default_capabilities()
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        cmp_nvim_lsp.default_capabilities()
+      )
 
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            handlers = handlers,
-            capabilities = capabilities,
-          })
-        end,
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "yamlls",
+          "lua_ls",
+          "pyright",
+          "ts_ls",
+          "gopls",
+          "html",
+          "cssls",
+          "graphql",
+        },
+        handlers = {
+          function(server_name)
+            require("lspconfig")[server_name].setup({
+              capabilities = capabilities,
+            })
+          end,
+        },
+        automatic_enable = true,
       })
     end,
   },

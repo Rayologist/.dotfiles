@@ -40,14 +40,6 @@ vim.keymap.set("n", "<CR>", function()
   end
 end, { expr = true })
 
-vim.keymap.set("n", "]d", function()
-  vim.diagnostic.goto_next({ float = true })
-end, { desc = "Go to next diagnostic and hover" })
-
-vim.keymap.set("n", "[d", function()
-  vim.diagnostic.goto_prev({ float = true })
-end, { desc = "Go to previous diagnostic and hover" })
-
 vim.keymap.set("n", "<leader>as", function()
   local word = vim.fn.expand("<cword>")
   if word == "" or word:match("^%s*$") then
