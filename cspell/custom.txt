@@ -16,3 +16,4 @@ tmux_sessionizer
 tpope
 wavesurfer
 heartbot
+winborder
