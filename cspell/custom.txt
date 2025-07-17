@@ -17,3 +17,4 @@ tpope
 wavesurfer
 heartbot
 winborder
+healthcheck
