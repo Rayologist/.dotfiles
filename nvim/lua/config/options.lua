@@ -3,14 +3,14 @@ vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 
 -- vim.opt.guicursor = ""
-vim.o.winborder = "rounded"
+vim.opt.winborder = "rounded"
 
 vim.opt.pumheight = 10
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
--- tabs && indentation -- managed by vim-sleuth
+-- indent will be handled by the plugin: indent-o-matic
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 2

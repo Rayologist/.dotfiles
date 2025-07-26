@@ -1,6 +1,7 @@
 return {
   {
-    "tpope/vim-sleuth",
+    "Darazaki/indent-o-matic",
+    opts = {},
   },
   {
     "lukas-reineke/indent-blankline.nvim",
