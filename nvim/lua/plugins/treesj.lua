@@ -1,12 +1,12 @@
 return {
-  'Wansmer/treesj',
-  dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  "Wansmer/treesj",
+  dependencies = { "nvim-treesitter/nvim-treesitter" },
   opts = {
     use_default_keymaps = false,
   },
   keys = {
     {
-      "<leader>m",
+      "<leader>js",
       "<cmd>TSJToggle<CR>",
       desc = "Toggle Join/Split",
     },
@@ -19,6 +19,6 @@ return {
       "<leader>sp",
       "<cmd>TSJSplit<CR>",
       desc = "Split",
-    }
-  }
+    },
+  },
 }
