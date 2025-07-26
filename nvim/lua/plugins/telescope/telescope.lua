@@ -16,16 +16,37 @@ return {
   },
   opts = function()
     local actions = require("telescope.actions")
+    local function flash(prompt_bufnr)
+      require("flash").jump({
+        pattern = "^",
+        label = { after = { 0, 0 } },
+        search = {
+          mode = "search",
+          exclude = {
+            function(win)
+              return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "TelescopeResults"
+            end,
+          },
+        },
+        action = function(match)
+          local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+          picker:set_selection(match.pos[1] - 1)
+        end,
+      })
+    end
+
     return {
       defaults = {
+        selection_caret = " ",
         mappings = {
           i = {
             ["<C-k>"] = actions.move_selection_previous,
             ["<C-j>"] = actions.move_selection_next,
+            ["<C-s>"] = flash,
           },
           n = {
             ["q"] = actions.close,
-            ["db"] = actions.delete_buffer,
+            ["s"] = flash,
           },
         },
       },
@@ -48,6 +69,20 @@ return {
       desc = "Find todos",
     },
     {
+      "<leader>fg",
+      function()
+        require("lua.plugins.telescope.multi_grep").multi_grep()
+      end,
+      { desc = "Multi Grep" },
+    },
+    {
+      "<leader>sm",
+      function()
+        builtin.man_pages()
+      end,
+      desc = "Search man pages",
+    },
+    {
       "<leader>sr",
       builtin.resume,
       desc = "Resume last search",
@@ -58,7 +93,7 @@ return {
       desc = "Search words",
     },
     {
-      "<leader>fd",
+      "<leader>ff",
       function()
         builtin.find_files({
           no_ignore = false,
@@ -67,6 +102,29 @@ return {
         })
       end,
       desc = "Find Files",
+    },
+    {
+      "<leader>sd",
+      function()
+        builtin.diagnostics({
+          bufnr = 0,
+        })
+      end,
+      desc = "Search document diagnostics",
+    },
+    {
+      "<leader>sD",
+      function()
+        builtin.diagnostics()
+      end,
+      desc = "Search workspace diagnostics",
+    },
+    {
+      "<leader>fc",
+      function()
+        builtin.command_history()
+      end,
+      desc = "Find command history",
     },
     {
       "<leader>fk",
