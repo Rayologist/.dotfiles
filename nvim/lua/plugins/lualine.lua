@@ -83,10 +83,10 @@ return {
         section_separators = { left = "", right = "" },
         disabled_filetypes = {
           statusline = {
-            "neo-tree",
-            "undotree",
+            -- "neo-tree",
+            -- "undotree",
           },
-        }
+        },
       },
       sections = {
         lualine_a = {
@@ -112,6 +112,27 @@ return {
             symbols = { modified = "", readonly = " 󰌾" },
             padding = { left = 0, right = 1 },
             -- separator = { left = '', right = ''},
+            fmt = function(str)
+              local ft = vim.bo.filetype
+              local is_readonly = vim.bo.modifiable == false or vim.bo.readonly == true
+              local is_really_modified = vim.bo.modified and vim.bo.buftype == ''
+              if ft:match("^neo%-tree") then
+                return "NeoTree 󰌾"
+              end
+              -- If the filetype is one of the passthrough types, return it first letter capitalized
+              local passthrough = { "lazy", "TelescopePrompt", "mason", "harpoon" }
+              if vim.tbl_contains(passthrough, ft) then
+                local res = ft:gsub("^%l", string.upper)
+                if is_readonly then
+                  res = res .. " 󰌾"
+                end
+                if is_really_modified  then
+                  res = res .. " "
+                end
+                return res
+              end
+              return str
+            end,
           },
         },
         lualine_c = {
