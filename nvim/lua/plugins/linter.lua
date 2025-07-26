@@ -9,11 +9,23 @@ return {
       typescriptreact = { "eslint_d" },
       python = { "ruff" },
       dockerfile = { "hadolint" },
-      go = { "golangci-lint" },
+      go = { "golangcilint" },
+      sh = { "shellcheck" },
+      markdown = { "markdownlint-cli2" },
       ["*"] = { "cspell" },
     },
-    ---@type table<string,table>
-    linters = {},
+    ---@type table<string, table>
+    linters = {
+      shellcheck = {
+        condition = function(ctx)
+          -- Skip shellcheck for .env files
+          if ctx.filename:match("%.env") or ctx.filename:match("%.env%.[%w_.-]+") then
+            return false
+          end
+          return true
+        end,
+      },
+    },
     default_severity = {
       ["error"] = vim.diagnostic.severity.WARN,
       ["warning"] = vim.diagnostic.severity.WARN,
