@@ -22,12 +22,11 @@ blocks:
         template: >-
           {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}
           <cyan>{{ if and (gt .Behind 0) (gt .Ahead 0) }}󰹹 {{ else if gt .Behind 0 }} {{ else if gt .Ahead 0 }} {{ end }}</>
-          
-        properties:
-          branch_icon: ''
-          commit_icon: '@'
-          fetch_status: true
 
+        properties:
+          branch_icon: ""
+          commit_icon: "@"
+          fetch_status: true
 
   - type: prompt
     alignment: left
@@ -55,7 +54,7 @@ blocks:
         # foreground: "#7FD5EA"
         foreground: cyan
         template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-        
+
       - type: lua
         style: plain
         foreground: blue
@@ -65,8 +64,8 @@ blocks:
 
       - type: python
         style: plain
-        foreground: "#906cff"
-        template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }} {{ .Full }} {{ end }} "
+        foreground: "#FFD343"
+        template: " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}(venv)  {{ .Full }}{{ end }}{{ end }} "
 
       - type: react
         style: plain
@@ -80,7 +79,7 @@ blocks:
 secondary_prompt:
   foreground: magenta
   background: transparent
-  template: '❯❯ '
+  template: "❯❯ "
 
 tooltips:
   - type: kubectl
@@ -93,4 +92,3 @@ tooltips:
       context_aliases:
         __firstory_prod_arn__: firstory-production
         __firstory_staging_arn__: firstory-staging
-
