@@ -18,3 +18,4 @@ wavesurfer
 heartbot
 winborder
 healthcheck
+pyright
