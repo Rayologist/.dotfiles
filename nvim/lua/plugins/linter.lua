@@ -3,11 +3,11 @@ return {
   opts = {
     events = { "BufWritePost", "BufReadPost", "InsertLeave" },
     linters_by_ft = {
-      javascript = { "eslint_d" },
-      typescript = { "eslint_d" },
-      javascriptreact = { "eslint_d" },
-      typescriptreact = { "eslint_d" },
-      python = { "ruff" },
+      -- javascript = { "eslint_d" }, -- Use eslint language server instead
+      -- typescript = { "eslint_d" }, -- Use eslint language server instead
+      -- javascriptreact = { "eslint_d" }, -- Use eslint language server instead
+      -- typescriptreact = { "eslint_d" }, -- Use eslint language server instead
+      -- python = { "ruff" }, -- Use ruff language server instead
       dockerfile = { "hadolint" },
       go = { "golangcilint" },
       sh = { "shellcheck" },
