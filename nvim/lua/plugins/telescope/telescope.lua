@@ -61,12 +61,20 @@ return {
     require("telescope").setup(opts)
     require("telescope").load_extension("ui-select")
     require("telescope").load_extension("fzf")
+    require("telescope").load_extension("fidget")
   end,
   keys = {
     {
       "<leader>ft",
       "<cmd>TodoTelescope<CR>",
       desc = "Find todos",
+    },
+    {
+      "<leader>fi",
+      function ()
+        require("telescope").extensions.fidget.fidget()
+      end,
+      desc = "Find fidgets history",
     },
     {
       "<leader>fg",
