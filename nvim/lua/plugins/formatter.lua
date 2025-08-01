@@ -13,6 +13,7 @@ return {
       html = { "prettier" },
       json = { "prettier" },
       yaml = { "prettier" },
+      toml = { "tombi" },
       markdown = { "prettier", "markdownlint-cli2", "markdown-toc" },
       ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       graphql = { "prettier" },
