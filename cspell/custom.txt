@@ -19,3 +19,5 @@ heartbot
 winborder
 healthcheck
 pyright
+basedpyright
+undercurl
