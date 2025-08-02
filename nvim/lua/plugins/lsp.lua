@@ -225,7 +225,7 @@ return {
                 --- Since another LSP (e.g. basedpyright) also reports on deprecated and
                 --- unused code, ruff's diagnostic tags are removed to ensure the undercurl is visible.
                 ---
-                --- @param err?    lsp.ResponseError
+                --- @param error?    lsp.ResponseError
                 --- @param result  lsp.DocumentDiagnosticReport
                 --- @param ctx     lsp.HandlerContext
                 [vim.lsp.protocol.Methods.textDocument_diagnostic] = function(error, result, ctx)
