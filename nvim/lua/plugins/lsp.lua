@@ -57,7 +57,7 @@ return {
       "b0o/SchemaStore.nvim",
     },
     config = function()
-      --- Setup keymaps for LSP clients
+      -- Setup keymaps for LSP clients
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(e)
@@ -91,24 +91,25 @@ return {
         end,
       })
 
-      --- diagnostics
+      -- diagnostics
       vim.diagnostic.config({
         float = { border = "rounded" },
         severity_sort = true,
         jump = {
           float = true,
         },
-        signs = {
-          text = {
-            [vim.diagnostic.severity.ERROR] = "",
-            [vim.diagnostic.severity.WARN] = "",
-            [vim.diagnostic.severity.HINT] = "",
-            [vim.diagnostic.severity.INFO] = "",
-          },
-        },
+        signs = false,
+        -- signs = {
+        --   text = {
+        --     [vim.diagnostic.severity.ERROR] = "",
+        --     [vim.diagnostic.severity.WARN] = "",
+        --     [vim.diagnostic.severity.HINT] = "",
+        --     [vim.diagnostic.severity.INFO] = "",
+        --   },
+        -- },
       })
 
-      --- lsp config
+      -- lsp config
       local schema_store = require("schemastore")
       local ensure_installed, enabled_ls = create_server_config({
         linters = {
@@ -116,7 +117,6 @@ return {
           "eslint_d",
           "golangci-lint",
           "hadolint",
-          "ruff",
           "markdownlint-cli2",
           "shellcheck",
         },
@@ -145,6 +145,7 @@ return {
           },
           docker_compose_language_service = {},
           marksman = {},
+          tombi = {}, -- TOML language server
           jsonls = {
             lspconfig = {
               settings = {
@@ -157,6 +158,8 @@ return {
                       "pnpm Workspace (pnpm-workspace.yaml)",
                       "prettierrc.json",
                       "nest-cli",
+                      "Ruff",
+                      "Pyright",
                     },
                   }),
                   format = {
@@ -195,6 +198,7 @@ return {
             },
           },
           lua_ls = {},
+          eslint = {},
           ts_ls = {},
           gopls = {},
           html = {},
@@ -203,9 +207,41 @@ return {
           golangci_lint_ls = {},
           ruff = {
             lspconfig = {
-              on_attach = function(client, _)
-                client.server_capabilities.hoverProvider = false
-              end,
+              cmd_env = { RUFF_TRACE = "messages" },
+              handlers = {
+                --- Fixes the **“undercurl not showing”** issue:
+                ---
+                --- Ruff ≥ 0.5 returns *pull diagnostics* via `textDocument/diagnostic`.
+                --- For unused or deprecated code it attaches `tags = { 1 | 2 }`
+                ---   1 → **Unnecessary**   → highlight `DiagnosticUnnecessary`
+                ---   2 → **Deprecated**    → highlight `DiagnosticDeprecated`
+                ---
+                --- Most color schemes place the visible undercurl on
+                --- `DiagnosticUnderline{Error,Warn,Info,Hint}` groups
+                --- but not on the two groups above.
+                --- When Neovim sees the tag, it **switches the highlight group**,
+                --- so the undercurl disappears and the text goes dim / strikethrough.
+                ---
+                --- Since another LSP (e.g. basedpyright) also reports on deprecated and
+                --- unused code, ruff's diagnostic tags are removed to ensure the undercurl is visible.
+                ---
+                --- @param err?    lsp.ResponseError
+                --- @param result  lsp.DocumentDiagnosticReport
+                --- @param ctx     lsp.HandlerContext
+                [vim.lsp.protocol.Methods.textDocument_diagnostic] = function(error, result, ctx)
+                  if result and result.kind == "full" then
+                    for _, diagnostic in ipairs(result.items) do
+                      diagnostic.tags = nil
+                    end
+                  end
+                  vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_diagnostic](error, result, ctx)
+                end,
+              },
+              init_options = {
+                settings = {
+                  logLevel = "error",
+                },
+              },
             },
           },
           basedpyright = {
@@ -213,10 +249,8 @@ return {
               settings = {
                 basedpyright = {
                   disableOrganizeImports = true, -- Using Ruff's import organizer
-                },
-                python = {
                   analysis = {
-                    ignore = { "*" }, -- Ignore all files by default
+                    diagnosticSeverityOverrides = {},
                   },
                 },
               },
