@@ -26,6 +26,7 @@ return {
     local cmp = require("cmp")
     local ls = require("luasnip")
     local lspkind = require("lspkind")
+    local defaults = require("cmp.config.default")()
 
     require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -70,6 +71,7 @@ return {
       }, {
         { name = "buffer" },
       }),
+      sorting = defaults.sorting,
       formatting = {
         fields = { "kind", "abbr", "menu" },
         expandable_indicator = true,
