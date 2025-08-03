@@ -71,7 +71,7 @@ return {
     },
     {
       "<leader>fi",
-      function ()
+      function()
         require("telescope").extensions.fidget.fidget()
       end,
       desc = "Find fidgets history",
@@ -96,11 +96,6 @@ return {
       desc = "Resume last search",
     },
     {
-      "<leader>sw",
-      builtin.live_grep,
-      desc = "Search words",
-    },
-    {
       "<leader>ff",
       function()
         builtin.find_files({
@@ -120,13 +115,7 @@ return {
       end,
       desc = "Search document diagnostics",
     },
-    {
-      "<leader>sD",
-      function()
-        builtin.diagnostics()
-      end,
-      desc = "Search workspace diagnostics",
-    },
+
     {
       "<leader>fc",
       function()
