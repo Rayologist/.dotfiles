@@ -5,11 +5,18 @@ return {
   name = "catppuccin",
   ---@type CatppuccinOptions
   opts = {
+    flavour = "macchiato",
+    float = {
+      transparent = true,
+      solid = false,
+    },
     no_italic = true,
     transparent_background = true,
     integrations = {
       lsp_trouble = true,
       mason = true,
+      fidget = true,
+      harpoon = true,
       native_lsp = {
         enabled = true,
         underlines = {
@@ -32,7 +39,7 @@ return {
     end,
   },
   config = function(_, opts)
-    require('catppuccin').setup(opts)
+    require("catppuccin").setup(opts)
     vim.cmd.colorscheme("catppuccin")
   end,
 }
