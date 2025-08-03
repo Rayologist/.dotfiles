@@ -1,44 +1,43 @@
 -- Copied from: https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/utils/lualine.lua
 local function getLuaLineTheme()
-  local C = require("catppuccin.palettes").get_palette()
   local M = require("catppuccin.palettes").get_palette("macchiato")
   local O = require("catppuccin").options
-  local bg = O.transparent_background and "NONE" or C.mantle
+  local bg = O.transparent_background and "NONE" or M.mantle
 
   local catppuccin = {}
 
   -- local y = { bg = C.maroon, fg = C.base }
   -- local z = { bg = C.flamingo, fg = C.mantle }
 
-  local y = { bg = C.surface0, fg = C.blue }
-  local z = { bg = C.blue, fg = C.mantle }
+  local y = { bg = M.surface0, fg = M.blue }
+  local z = { bg = M.blue, fg = M.mantle }
 
   catppuccin.normal = {
-    a = { bg = C.blue, fg = C.mantle, gui = "bold" },
-    b = { bg = C.surface0, fg = C.blue },
-    c = { bg = bg, fg = C.text },
+    a = { bg = M.blue, fg = M.mantle, gui = "bold" },
+    b = { bg = M.surface0, fg = M.blue },
+    c = { bg = bg, fg = M.text },
 
-    x = { bg = bg, fg = C.overlay0 },
+    x = { bg = bg, fg = M.overlay0 },
     y = y,
     z = z,
   }
 
   catppuccin.insert = {
-    a = { bg = C.maroon, fg = C.base, gui = "bold" },
+    a = { bg = M.maroon, fg = M.base, gui = "bold" },
 
     y = y,
     z = z,
   }
 
   catppuccin.terminal = {
-    a = { bg = C.green, fg = C.base, gui = "bold" },
+    a = { bg = M.green, fg = M.base, gui = "bold" },
     -- b = { bg = C.surface0, fg = C.green },
     y = y,
     z = z,
   }
 
   catppuccin.command = {
-    a = { bg = C.peach, fg = C.base, gui = "bold" },
+    a = { bg = M.peach, fg = M.base, gui = "bold" },
     -- b = { bg = C.surface0, fg = C.peach },
 
     y = y,
@@ -46,7 +45,7 @@ local function getLuaLineTheme()
   }
 
   catppuccin.visual = {
-    a = { bg = C.mauve, fg = C.base, gui = "bold" },
+    a = { bg = M.mauve, fg = M.base, gui = "bold" },
     -- b = { bg = C.surface0, fg = C.mauve },
 
     y = y,
@@ -54,7 +53,7 @@ local function getLuaLineTheme()
   }
 
   catppuccin.replace = {
-    a = { bg = C.red, fg = C.base, gui = "bold" },
+    a = { bg = M.red, fg = M.base, gui = "bold" },
     -- b = { bg = C.surface0, fg = C.red },
 
     y = y,
@@ -62,9 +61,9 @@ local function getLuaLineTheme()
   }
 
   catppuccin.inactive = {
-    a = { bg = bg, fg = C.blue },
-    b = { bg = bg, fg = C.surface1, gui = "bold" },
-    c = { bg = bg, fg = C.overlay0 },
+    a = { bg = bg, fg = M.blue },
+    b = { bg = bg, fg = M.surface1, gui = "bold" },
+    c = { bg = bg, fg = M.overlay0 },
   }
 
   return catppuccin
@@ -115,18 +114,18 @@ return {
             fmt = function(str)
               local ft = vim.bo.filetype
               local is_readonly = vim.bo.modifiable == false or vim.bo.readonly == true
-              local is_really_modified = vim.bo.modified and vim.bo.buftype == ''
+              local is_really_modified = vim.bo.modified and vim.bo.buftype == ""
               if ft:match("^neo%-tree") then
                 return "NeoTree 󰌾"
               end
               -- If the filetype is one of the passthrough types, return it first letter capitalized
-              local passthrough = { "lazy", "TelescopePrompt", "mason", "harpoon" }
+              local passthrough = { "lazy", "TelescopePrompt", "mason", "harpoon", "checkhealth" }
               if vim.tbl_contains(passthrough, ft) then
                 local res = ft:gsub("^%l", string.upper)
                 if is_readonly then
                   res = res .. " 󰌾"
                 end
-                if is_really_modified  then
+                if is_really_modified then
                   res = res .. " "
                 end
                 return res
