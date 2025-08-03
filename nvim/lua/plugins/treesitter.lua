@@ -33,7 +33,7 @@ return {
           "toml",
           "yaml",
           "xml",
-          
+
           "lua",
           "luadoc",
           "luap",
@@ -93,11 +93,11 @@ return {
           -- `false` will disable the whole extension
           enable = true,
           disable = function(lang, buf)
-            local max_filesize = 100 * 1024 -- 100 KB
+            local max_filesize = 300 * 1024 -- 100 KB
             local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
               vim.notify(
-                "File larger than 100KB. Treesitter is disabled for performance",
+                "File larger than 300KB. Treesitter is disabled for performance",
                 vim.log.levels.WARN,
                 { title = "Treesitter" }
               )
