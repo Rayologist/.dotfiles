@@ -66,14 +66,49 @@ local function getLuaLineTheme()
     c = { bg = bg, fg = M.overlay0 },
   }
 
-  return catppuccin
+  return catppuccin, M
+end
+
+local function harpoon2()
+  local harpoon = require("harpoon")
+
+  local items = harpoon:list().items
+
+  if #items == 0 then
+    return ""
+  end
+
+  local current_file = vim.api.nvim_buf_get_name(0)
+
+  local numbers = { "󰲠", "󰲢", "󰲤", "󰲦" }
+
+  --- @type string[]
+  local status = {}
+  for i, item in ipairs(items) do
+    local is_active = vim.endswith(current_file, item.value)
+
+    if is_active then
+      table.insert(status, numbers[i])
+    else
+      table.insert(status, string.format("%%#Whitespace#%s%%*", numbers[i]))
+    end
+  end
+
+  if #status < 4 then
+    -- Fill the rest with empty indicators
+    for _ = #status + 1, 4 do
+      table.insert(status, string.format("%%#Whitespace#%s%%*", ""))
+    end
+  end
+
+  return table.concat(status, " ")
 end
 
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = function()
-    local theme = getLuaLineTheme()
+    local theme, palette = getLuaLineTheme()
     return {
       options = {
         theme = theme,
@@ -135,6 +170,14 @@ return {
           },
         },
         lualine_c = {
+          {
+            harpoon2,
+            icon = {
+              "󰀱",
+              color = { fg = palette.flamingo },
+              align = "left",
+            },
+          },
           {
             "diagnostics",
           },
