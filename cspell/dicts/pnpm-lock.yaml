@@ -8,15 +8,54 @@ importers:
 
   .:
     dependencies:
+      '@cspell/dict-cpp':
+        specifier: ^6.0.9
+        version: 6.0.9
+      '@cspell/dict-node':
+        specifier: ^5.0.8
+        version: 5.0.8
+      '@cspell/dict-python':
+        specifier: ^4.2.19
+        version: 4.2.19
+      '@cspell/dict-typescript':
+        specifier: ^3.2.3
+        version: 3.2.3
       '@cspell/dict-vim':
         specifier: ^1.0.8
         version: 1.0.8
 
 packages:
 
+  '@cspell/dict-cpp@6.0.9':
+    resolution: {integrity: sha512-Xdq9MwGh0D5rsnbOqFW24NIClXXRhN11KJdySMibpcqYGeomxB2ODFBuhj1H7azO7kVGkGH0Okm4yQ2TRzBx0g==}
+
+  '@cspell/dict-data-science@2.0.9':
+    resolution: {integrity: sha512-wTOFMlxv06veIwKdXUwdGxrQcK44Zqs426m6JGgHIB/GqvieZQC5n0UI+tUm5OCxuNyo4OV6mylT4cRMjtKtWQ==}
+
+  '@cspell/dict-node@5.0.8':
+    resolution: {integrity: sha512-AirZcN2i84ynev3p2/1NCPEhnNsHKMz9zciTngGoqpdItUb2bDt1nJBjwlsrFI78GZRph/VaqTVFwYikmncpXg==}
+
+  '@cspell/dict-python@4.2.19':
+    resolution: {integrity: sha512-9S2gTlgILp1eb6OJcVZeC8/Od83N8EqBSg5WHVpx97eMMJhifOzePkE0kDYjyHMtAFznCQTUu0iQEJohNQ5B0A==}
+
+  '@cspell/dict-typescript@3.2.3':
+    resolution: {integrity: sha512-zXh1wYsNljQZfWWdSPYwQhpwiuW0KPW1dSd8idjMRvSD0aSvWWHoWlrMsmZeRl4qM4QCEAjua8+cjflm41cQBg==}
+
   '@cspell/dict-vim@1.0.8':
     resolution: {integrity: sha512-LUnznQiaNatVfb89pu916qYJwbkvgTKyNXK17MRHm1AgcCxN5Z1V5hyqTlQumhQYVAFFvN8t9VQDUw6k47spiw==}
 
 snapshots:
+
+  '@cspell/dict-cpp@6.0.9': {}
+
+  '@cspell/dict-data-science@2.0.9': {}
+
+  '@cspell/dict-node@5.0.8': {}
+
+  '@cspell/dict-python@4.2.19':
+    dependencies:
+      '@cspell/dict-data-science': 2.0.9
+
+  '@cspell/dict-typescript@3.2.3': {}
 
   '@cspell/dict-vim@1.0.8': {}

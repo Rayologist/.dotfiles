@@ -11,13 +11,11 @@ lumosads
 fmtaiwan
 gitsigns
 lualine
-libuv
 tmux_sessionizer
 tpope
 wavesurfer
 heartbot
 winborder
 healthcheck
-pyright
 basedpyright
 undercurl
