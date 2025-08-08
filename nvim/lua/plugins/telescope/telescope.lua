@@ -115,11 +115,17 @@ return {
       end,
       desc = "Search document diagnostics",
     },
-
+    {
+      "<leader>f:",
+      function()
+        builtin.command_history()
+      end,
+      desc = "Find command history",
+    },
     {
       "<leader>fc",
       function()
-        builtin.command_history()
+        builtin.commands()
       end,
       desc = "Find command history",
     },
