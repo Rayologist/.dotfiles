@@ -5,7 +5,6 @@ return {
   name = "catppuccin",
   ---@type CatppuccinOptions
   opts = {
-    flavour = "macchiato",
     float = {
       transparent = true,
       solid = false,
@@ -33,8 +32,26 @@ return {
       },
     },
     custom_highlights = function(colors)
+      -- default highlight: https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/treesitter.lua
       return {
+        -- ai
         CmpGhostText = { fg = colors.mantle },
+
+        -- global
+        ["@property"] = { fg = colors.lavender }, -- we can delete this once catppuccin merged https://github.com/catppuccin/nvim/pull/905
+        ["@lsp.typemod.variable.readonly"] = { link = "Constant" },
+
+        -- lua
+        ["@lsp.type.property.lua"] = { link = "@lsp" },
+
+        -- html
+        ["@tag.delimiter"] = { fg = colors.overlay2 },
+
+        -- jsx, tsx
+        ["@tag.attribute.tsx"] = { link = "@property" },
+        ["@tag.attribute.jsx"] = { link = "@property" },
+        ["@tag.tsx"] = { link = "Type" },
+        ["@tag.jsx"] = { link = "Type" },
       }
     end,
   },
