@@ -1,6 +1,6 @@
 -- Copied from: https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/utils/lualine.lua
 local function getLuaLineTheme()
-  local M = require("catppuccin.palettes").get_palette("macchiato")
+  local M = require("catppuccin.palettes").get_palette("mocha")
   local O = require("catppuccin").options
   local bg = O.transparent_background and "NONE" or M.mantle
 
@@ -73,10 +73,6 @@ local function harpoon2()
   local harpoon = require("harpoon")
 
   local items = harpoon:list().items
-
-  if #items == 0 then
-    return ""
-  end
 
   local current_file = vim.api.nvim_buf_get_name(0)
 
